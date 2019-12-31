@@ -65,12 +65,12 @@ public class SpaceTest {
             Leaf leaf = new Leaf("leaf1", 4);
             space.Alloc(4, leaf);
             Tree tree = new Tree("tree");
+            tree.children.put("leaf1",leaf);
             leaf.parent = tree;
             space.Dealloc(leaf);
             Leaf[] expected = new Leaf[10];
-            Leaf[] temp = space.getAlloc();
             assertEquals(expected,space.getAlloc());
-
+            assertTrue(!tree.children.containsKey("leaf1"));
         } catch (Exception e) {
 
         }

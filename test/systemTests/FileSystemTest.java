@@ -25,7 +25,9 @@ public class FileSystemTest {
         String [] pathDir = {"rootN","someDirectory"};
         try{
             testedFileSystem.dir(pathDir);
-        }catch (IndexOutOfBoundsException e){
+            Tree t = new Tree("rootN");
+            t.GetChildByName("someDirectory");
+            assertEquals(t,testedFileSystem.DirExists(pathDir));
         } catch (Exception e){
             assertEquals(e.getClass(),BadFileNameException.class);
         }
@@ -63,8 +65,13 @@ public class FileSystemTest {
         String [] pathDir1 = {"root","someDirectory"};
         try{
             testedFileSystem.dir(pathDir1);
+            Tree t = new Tree("root");
+            t.GetChildByName("someDirectory");
+            t = testedFileSystem.DirExists(pathDir);
+            Tree temp = testedFileSystem.DirExists(pathDir1);
+            assertEquals(t,testedFileSystem.DirExists(pathDir1));
         }catch (Exception e){
-            assertNotEquals(e.getClass(),BadFileNameException.class);
+            assertEquals(e.getClass(),BadFileNameException.class);
         }
     }
 
@@ -236,7 +243,7 @@ public class FileSystemTest {
         try {
             testedFileSystem.file(insert,8);
         }catch (Exception e){
-            assertNotEquals(e.getClass(),OutOfSpaceException.class);
+            assertEquals(OutOfSpaceException.class,e.getClass());
         }
         String [][] expected = new String[7][];
         expected [0] = new String[]{"root", "file"};
